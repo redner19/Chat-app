@@ -1,17 +1,23 @@
 # Chat-app
 
-A chat app with minimal design
+A chat app with minimal design ❤️
 
 
 ## Usage
 
 Use email to sign-up a user.
 
-```
+```html
 Email should contain 8 - 16 characters.
 *example redner@gmail.com
 ```
 
-## Database
+## Framework / Libraries
 
-I use FireStore for this project ❤️
+```html
+MaterialDesign
+RecyclerView
+Butterknife 
+FireBase
+```
+
