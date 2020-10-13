@@ -1,13 +1,11 @@
 package com.sololearner.chatapp.presentation;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,53 +14,48 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sololearner.chatapp.R;
 import com.sololearner.chatapp.adapters.MessageAdapter;
+import com.sololearner.chatapp.presentation.base.BaseActivity;
 import com.sololearner.chatapp.utils.Constants;
-import com.sololearner.chatapp.utils.NavigationUtils;
 import com.sololearner.chatapp.viewmodel.ChatViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ChatFragment extends Fragment {
+import static com.sololearner.chatapp.utils.NavigationUtils.goToSignUp;
+
+public class Chat extends BaseActivity {
     private ChatViewModel chatViewModel;
 
     private MessageAdapter adapter;
 
     @BindView(R.id.toolbar_sign_out)
-    MaterialButton mSignOutBTN;
+    Button mSignOutBTN;
 
     @BindView(R.id.chat_TIET)
-    TextInputEditText mMessage;
+    EditText mMessage;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat);
+
         // Bind ButterKnife
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this);
 
-        return view;
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        iniChatViewModel();
+        initViewModelProvider();
 
         initRecyclerView();
 
         initAdapter();
     }
 
-    private void iniChatViewModel() {
+    private void initViewModelProvider() {
         //init viewModel
-        chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
     }
 
     private void initRecyclerView() {
@@ -70,7 +63,7 @@ public class ChatFragment extends Fragment {
         mSignOutBTN.setVisibility(View.VISIBLE);
 
         // init linearLayoutManager
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
 
         // setLayoutManager
@@ -99,9 +92,12 @@ public class ChatFragment extends Fragment {
         switch (view.getId()) {
             case R.id.toolbar_sign_out:
                 //logout user
-                chatViewModel.firebaseAuth().signOut();
-                NavigationUtils
-                        .navigate(mSignOutBTN,R.id.action_chatFragment_to_signupFragment);
+                chatViewModel
+                        .firebaseAuth()
+                        .signOut();
+
+                goToSignUp(this);
+                finish();
                 break;
             case R.id.chat_send_btn:
                 // send message to db / firestore

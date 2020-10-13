@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.LoginFragment">
+    tools:context=".presentation.Login">
 
     <include
         android:id="@+id/include"
@@ -16,8 +16,10 @@
     <View
         android:id="@+id/view7"
         android:layout_width="0dp"
-        android:layout_height="0.011dp"
-        android:background="@color/colorGray"
+        android:layout_height="1dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:background="@color/colorLightGray"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintStart_toStartOf="@+id/include"
         app:layout_constraintTop_toBottomOf="@+id/include" />
@@ -27,9 +29,9 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginStart="@dimen/margin_padding_xxnormal"
+        android:layout_marginTop="@dimen/toolbar_margin_hdpi"
+        android:layout_marginEnd="@dimen/margin_padding_xxnormal"
         app:errorIconDrawable="@null"
         app:errorTextAppearance="@style/Error"
         app:hintAnimationEnabled="false"
@@ -48,7 +50,7 @@
             android:hint="@string/lbl_user_name"
             android:inputType="textEmailAddress"
             android:singleLine="true"
-            android:textSize="24sp" />
+            android:textSize="@dimen/text_size_small_xhdpi" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -56,15 +58,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginTop="@dimen/marginTopBig_hdpi"
         app:errorIconDrawable="@null"
         app:errorTextAppearance="@style/Error"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/login_user_name_TIL"
+        app:layout_constraintStart_toStartOf="@+id/login_user_name_TIL"
         app:layout_constraintTop_toBottomOf="@+id/login_user_name_TIL"
         app:startIconTint="@color/colorGray">
 
@@ -76,19 +76,19 @@
             android:hint="@string/lbl_password"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="24sp" />
+            android:textSize="@dimen/text_size_small_xhdpi" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_submit_btn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_height="@dimen/button_size_height_xxxhdpi"
+        android:layout_marginTop="@dimen/marginTop_xxxhdpi"
         android:text="@string/btn_index_login"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:textSize="24sp"
+        android:textSize="@dimen/button_text_size_xxhdpi"
         android:textStyle="bold"
         app:backgroundTint="@color/colorAccent"
         app:cornerRadius="6dp"
@@ -101,21 +101,25 @@
         android:id="@+id/login_sign_up_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="@dimen/margin_padding_xsmall"
         android:text="@string/btn_index_sign_up"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size_small_xxxhdpi"
         app:layout_constraintEnd_toEndOf="@+id/login_submit_btn"
         app:layout_constraintStart_toStartOf="@+id/login_submit_btn"
         app:layout_constraintTop_toBottomOf="@+id/login_submit_btn" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="@dimen/marginTop_hdpi"
         android:text="@string/lbl_agreement"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="@dimen/text_size_small_xxhdpi"
+        app:layout_constraintEnd_toEndOf="@+id/login_submit_btn"
+        app:layout_constraintStart_toStartOf="@+id/login_submit_btn"
         app:layout_constraintTop_toBottomOf="@+id/login_sign_up_btn" />
 
 

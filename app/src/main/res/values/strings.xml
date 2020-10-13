@@ -13,7 +13,7 @@
 
     <!-- Buttons -->
     <string name="btn_index_login">Login</string>
-    <string name="btn_index_sign_up">Sign Up</string>
+    <string name="btn_index_sign_up">Sign up</string>
     <string name="btn_toolbar_logout">Log out</string>
     <string name="btn_chat_send">Send</string>
 

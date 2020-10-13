@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.IndexFragment">
+    tools:context=".presentation.Index">
 
 
     <ImageView
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:fontFamily="@font/catamaran_semibold"
+        android:fontFamily="monospace"
         android:text="@string/lbl_index_title"
         android:textAlignment="center"
         android:textColor="#050505"
@@ -34,16 +34,16 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="12dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_size_height_xxxhdpi"
+        android:layout_marginStart="@dimen/margin_padding_xxnormal"
+        android:layout_marginTop="@dimen/toolbar_margin_hdpi"
+        android:layout_marginEnd="@dimen/margin_padding_xxnormal"
         android:text="@string/btn_index_sign_up"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:textSize="24sp"
+        android:textSize="@dimen/button_text_size_xxhdpi"
         android:textStyle="bold"
         app:backgroundTint="@color/colorPrimaryDark"
         app:cornerRadius="6dp"
@@ -56,12 +56,12 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_id"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_size_height_xxxhdpi"
         android:text="@string/btn_index_login"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:textSize="24sp"
+        android:textSize="@dimen/button_text_size_xxhdpi"
         android:textStyle="bold"
         app:backgroundTint="@color/colorAccent"
         app:cornerRadius="6dp"

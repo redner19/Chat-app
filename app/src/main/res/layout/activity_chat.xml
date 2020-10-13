@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ChatFragment">
+    tools:context=".presentation.Chat">
 
     <include
         android:id="@+id/toolbar_layout"
@@ -16,8 +16,10 @@
     <View
         android:id="@+id/top_line"
         android:layout_width="0dp"
-        android:layout_height="0.011dp"
-        android:background="@color/colorGray"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_padding_normal"
+        android:layout_marginEnd="@dimen/margin_padding_normal"
+        android:background="@color/colorLightGray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
@@ -26,7 +28,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="2dp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,48 +45,49 @@
         <View
             android:id="@+id/view7"
             android:layout_width="0dp"
-            android:layout_height="0.011dp"
-            android:background="@color/colorGray"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/margin_padding_normal"
+            android:layout_marginEnd="@dimen/margin_padding_normal"
+            android:background="@color/colorLightGray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/chat_TIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/chat_TIET"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:endIconMode="clear_text"
-            app:hintEnabled="false"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/margin_padding_xsmall"
+            android:layout_marginBottom="@dimen/margin_padding_xsmall"
+            android:layout_marginStart="@dimen/margin_padding_xxnormal"
+            android:layout_marginEnd="@dimen/margin_padding_xsmall"
+            android:background="@drawable/round_corner"
+            android:hint="@string/lbl_start_new_message"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:padding="8dp"
+            android:imeOptions="normal"
+            android:textSize="@dimen/text_size_small_mdpi"
             app:hintAnimationEnabled="false"
+            app:hintEnabled="false"
             app:hintTextColor="@color/colorGray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/chat_send_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view7"
-            app:startIconTint="@color/colorGray">
+            app:layout_constraintTop_toBottomOf="@+id/view7" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/chat_TIET"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner"
-                android:hint="@string/lbl_start_new_message"
-                android:singleLine="true" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/chat_send_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="12dp"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/margin_padding_xxnormal"
             android:text="@string/btn_chat_send"
+            android:textAllCaps="false"
             app:backgroundTint="@color/colorGray"
-            app:layout_constraintBottom_toBottomOf="@+id/chat_TIL"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_TIET"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/chat_TIL"
-            app:layout_constraintTop_toTopOf="@+id/chat_TIL" />
+            app:layout_constraintStart_toEndOf="@+id/chat_TIET"
+            app:layout_constraintTop_toTopOf="@+id/chat_TIET" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

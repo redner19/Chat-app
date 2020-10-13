@@ -1,24 +1,19 @@
 package com.sololearner.chatapp.presentation;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.sololearner.chatapp.R;
 import com.sololearner.chatapp.core.User;
-import com.sololearner.chatapp.utils.NavigationUtils;
+import com.sololearner.chatapp.presentation.base.BaseActivity;
 import com.sololearner.chatapp.utils.StringUtils;
-import com.sololearner.chatapp.viewmodel.LoginViewModel;
+import com.sololearner.chatapp.viewmodel.SignUpViewModel;
 
 import java.util.Objects;
 
@@ -26,75 +21,79 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginFragment extends Fragment {
+import static com.sololearner.chatapp.utils.NavigationUtils.goToChat;
+import static com.sololearner.chatapp.utils.NavigationUtils.goToLogin;
 
-    private LoginViewModel loginViewModel;
+public class SignUp extends BaseActivity {
+
+    private SignUpViewModel signUpViewModel;
 
     //TextInputEditText
-    @BindView(R.id.login_user_name_TIET)
+    @BindView(R.id.sign_up_user_name_TIET)
     TextInputEditText mUserNameTIET;
 
-    @BindView(R.id.login_password_TIET)
+    @BindView(R.id.sign_up_password_TIET)
     TextInputEditText mPasswordTIEL;
 
     //TextInputLayout
-    @BindView(R.id.login_user_name_TIL)
+    @BindView(R.id.sign_up_user_name_TIL)
     TextInputLayout mUserNameTIL;
 
-    @BindView(R.id.login_password_TIL)
+    @BindView(R.id.sign_up_password_TIL)
     TextInputLayout mPasswordTIL;
 
-    //Button
-    @BindView(R.id.login_submit_btn)
-    MaterialButton mLoginBTN;
-
     //TextView
-    @BindView(R.id.login_sign_up_btn)
-    MaterialTextView mSignUpBTN;
+    @BindView(R.id.sign_up_login_btn)
+    MaterialTextView mLoginBTN;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signup);
 
-        ButterKnife.bind(this, view);
+        // Bind ButterKnife
+        ButterKnife.bind(this);
 
-        return view;
+        initViewModelProvider();
+
+        initButton();
+
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //Set text
-        mSignUpBTN
-                .setText(StringUtils
-                        .underLine(getString(R.string.btn_index_sign_up)));
+    private void initViewModelProvider() {
+        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
 
-        loginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
-        loginViewModel.isSuccess.observe(requireActivity(), isSuccess -> {
+        signUpViewModel.isSuccess.observe(this, isSuccess -> {
             if (isSuccess) {
-                NavigationUtils.navigate(mSignUpBTN,
-                        R.id.action_loginFragment_to_chatFragment);
+                //Goto Chat
+                goToChat(this);
             } else {
                 mUserNameTIL.setError(getString(R.string.err_value_incorrect));
                 mPasswordTIL.setError(getString(R.string.err_value_incorrect));
             }
         });
+    }
+
+    private void initButton() {
+        // Set text
+        mLoginBTN
+                .setText(StringUtils
+                        .underLine(getString(R.string.btn_index_login)));
 
     }
 
-    @OnClick({R.id.login_submit_btn, R.id.login_sign_up_btn})
+
+    @OnClick({R.id.sign_up_submit_btn, R.id.sign_up_login_btn})
     void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_submit_btn:
+            case R.id.sign_up_submit_btn:
                 if (isValid())
-                    loginViewModel
-                            .loginAccount(getUser());
+                    signUpViewModel.createAccount(getUser());
                 break;
-            case R.id.login_sign_up_btn:
-                NavigationUtils
-                        .navigate(mSignUpBTN, R.id.action_loginFragment_to_signupFragment);
+            case R.id.sign_up_login_btn:
+                //navigate to login fragment
+                goToLogin(this);
                 break;
         }
     }
@@ -102,7 +101,6 @@ public class LoginFragment extends Fragment {
 
     private Boolean isValid() {
         boolean valid = true;
-
         User user = getUser();
 
         //isValid if email length is greater than equal to and and less than equal to 16
@@ -126,9 +124,10 @@ public class LoginFragment extends Fragment {
         return valid;
     }
 
-    private User getUser(){
+    private User getUser() {
         String email = Objects.requireNonNull(mUserNameTIET.getText()).toString();
         String password = Objects.requireNonNull(mPasswordTIEL.getText()).toString();
-        return new User(email,password);
+        return new User(email, password);
     }
+
 }
