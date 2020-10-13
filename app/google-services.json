@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "949449278324",
+    "firebase_url": "https://chat-app-6292a.firebaseio.com",
+    "project_id": "chat-app-6292a",
+    "storage_bucket": "chat-app-6292a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949449278324:android:844e36e6c5fcf697ad2221",
+        "android_client_info": {
+          "package_name": "com.sololearner.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949449278324-ru3ir3s2fanc5rn11vuu5hcslpf3uvtg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sololearner.chatapp",
+            "certificate_hash": "3e9d89ff27e228eb4e1fe12c325f9852a465f03c"
+          }
+        },
+        {
+          "client_id": "949449278324-gk4116v2hjsshnmekissf1ubr4f3rveo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFaJpBRUKUSEKdXRJh_m30FnU2OnIO6A8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949449278324-gk4116v2hjsshnmekissf1ubr4f3rveo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

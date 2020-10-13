@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Chat App</string>
+
+    <!-- Labels -->
+    <string name="lbl_index_title">Chat app</string>
+    <string name="lbl_start_new_message">Start a new message</string>
+    <string name="lbl_message_template">Hello World!!</string>
+    <string name="lbl_message_in">You</string>
+    <string name="lbl_message_out">Them</string>
+    <string name="lbl_agreement">By signing up, you agree to the Terms of Service and Privacy Policy, Including Cookie Use. Others will be able to find you by searching for your email address or phone number provided.</string>
+    <string name="lbl_user_name">User name</string>
+    <string name="lbl_password">password</string>
+
+    <!-- Buttons -->
+    <string name="btn_index_login">Login</string>
+    <string name="btn_index_sign_up">Sign Up</string>
+    <string name="btn_toolbar_logout">Log out</string>
+    <string name="btn_chat_send">Send</string>
+
+    <!-- Errors -->
+    <string name="err_value_incorrect">Value is incorrect</string>
+
+</resources>
