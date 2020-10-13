@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -26,30 +27,34 @@ import static com.sololearner.chatapp.utils.NavigationUtils.goToSignUp;
 
 public class Login extends BaseActivity {
 
-    LoginViewModel loginViewModel;
+    LoginViewModel mLoginViewModel;
 
     //TextInputEditText
-    @BindView(R.id.login_user_name_TIET)
+    @BindView(R.id.common_user_name_TIET)
     TextInputEditText mUserNameTIET;
 
-    @BindView(R.id.login_password_TIET)
+    @BindView(R.id.common_password_TIET)
     TextInputEditText mPasswordTIEL;
 
     //TextInputLayout
-    @BindView(R.id.login_user_name_TIL)
+    @BindView(R.id.common_user_name_TIL)
     TextInputLayout mUserNameTIL;
 
-    @BindView(R.id.login_password_TIL)
+    @BindView(R.id.common_password_TIL)
     TextInputLayout mPasswordTIL;
 
-    //TextView
-    @BindView(R.id.login_sign_up_btn)
+    //MaterialButton
+    @BindView(R.id.common_submit_btn)
+    MaterialButton mLoginBTN;
+
+    //MaterialTextView
+    @BindView(R.id.common_nav_btn)
     MaterialTextView mSignUpBTN;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.common_layout);
 
         // Bind ButterKnife
         ButterKnife.bind(this);
@@ -61,8 +66,10 @@ public class Login extends BaseActivity {
     }
 
     private void initViewModelProvider() {
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        loginViewModel.isSuccess.observe(this, isSuccess -> {
+        // init viewModel
+        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        // observe if login is success viewModel
+        mLoginViewModel.isSuccess.observe(this, isSuccess -> {
             if (isSuccess) {
                 //Goto Chat Page
                 goToChat(this);
@@ -78,18 +85,23 @@ public class Login extends BaseActivity {
         mSignUpBTN
                 .setText(StringUtils
                         .underLine(getString(R.string.btn_index_sign_up)));
+        mLoginBTN
+                .setText(getString(R.string.btn_index_login));
     }
 
 
-    @OnClick({R.id.login_submit_btn, R.id.login_sign_up_btn})
+    @OnClick({R.id.common_submit_btn, R.id.common_nav_btn})
     void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_submit_btn:
+            case R.id.common_submit_btn:
+                // check if input is valid
                 if (isValid())
-                    loginViewModel
+                    // login account if input is valid
+                    mLoginViewModel
                             .loginAccount(getUser());
                 break;
-            case R.id.login_sign_up_btn:
+            case R.id.common_nav_btn:
+                //navigate to sign up fragment
                 goToSignUp(this);
                 break;
         }
@@ -97,8 +109,6 @@ public class Login extends BaseActivity {
 
 
     private Boolean isValid() {
-        boolean valid = true;
-
         User user = getUser();
 
         //isValid if email length is greater than equal to and and less than equal to 16
@@ -107,7 +117,7 @@ public class Login extends BaseActivity {
             mUserNameTIL.setErrorEnabled(false);
         } else {
             mUserNameTIL.setError(getString(R.string.err_value_incorrect));
-            valid = false;
+            return false;
         }
 
         //isValid if password length is greater than equal to and and less than equal to 16
@@ -116,10 +126,10 @@ public class Login extends BaseActivity {
             mPasswordTIL.setErrorEnabled(false);
         } else {
             mPasswordTIL.setError(getString(R.string.err_value_incorrect));
-            valid = false;
+            return false;
         }
 
-        return valid;
+        return true;
     }
 
     private User getUser() {

@@ -9,23 +9,29 @@
     <include
         android:id="@+id/include"
         layout="@layout/custom_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp" />
 
     <View
         android:id="@+id/view7"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
+        android:layout_below="@+id/include"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/margin_padding_normal"
+        android:layout_marginEnd="@dimen/margin_padding_normal"
         android:background="@color/colorLightGray"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintStart_toStartOf="@+id/include"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_user_name_TIL"
+        android:id="@+id/common_user_name_TIL"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -43,7 +49,7 @@
         app:startIconTint="@color/colorGray">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_user_name_TIET"
+            android:id="@+id/common_user_name_TIET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/round_corner"
@@ -54,7 +60,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_password_TIL"
+        android:id="@+id/common_password_TIL"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -63,13 +69,13 @@
         app:errorTextAppearance="@style/Error"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="@+id/login_user_name_TIL"
-        app:layout_constraintStart_toStartOf="@+id/login_user_name_TIL"
-        app:layout_constraintTop_toBottomOf="@+id/login_user_name_TIL"
+        app:layout_constraintEnd_toEndOf="@+id/common_user_name_TIL"
+        app:layout_constraintStart_toStartOf="@+id/common_user_name_TIL"
+        app:layout_constraintTop_toBottomOf="@+id/common_user_name_TIL"
         app:startIconTint="@color/colorGray">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_password_TIET"
+            android:id="@+id/common_password_TIET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/round_corner"
@@ -80,11 +86,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_submit_btn"
+        android:id="@+id/common_submit_btn"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_size_height_xxxhdpi"
         android:layout_marginTop="@dimen/marginTop_xxxhdpi"
-        android:text="@string/btn_index_login"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
@@ -92,35 +97,34 @@
         android:textStyle="bold"
         app:backgroundTint="@color/colorAccent"
         app:cornerRadius="6dp"
-        app:layout_constraintEnd_toEndOf="@+id/login_password_TIL"
-        app:layout_constraintStart_toStartOf="@+id/login_password_TIL"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_TIL"
+        app:layout_constraintEnd_toEndOf="@+id/common_password_TIL"
+        app:layout_constraintStart_toStartOf="@+id/common_password_TIL"
+        app:layout_constraintTop_toBottomOf="@+id/common_password_TIL"
         app:rippleColor="@color/colorPrimaryDark" />
 
-    <TextView
-        android:id="@+id/login_sign_up_btn"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/common_nav_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_padding_xsmall"
-        android:text="@string/btn_index_sign_up"
         android:textSize="@dimen/text_size_small_xxxhdpi"
-        app:layout_constraintEnd_toEndOf="@+id/login_submit_btn"
-        app:layout_constraintStart_toStartOf="@+id/login_submit_btn"
-        app:layout_constraintTop_toBottomOf="@+id/login_submit_btn" />
+        app:layout_constraintEnd_toEndOf="@+id/common_submit_btn"
+        app:layout_constraintStart_toStartOf="@+id/common_submit_btn"
+        app:layout_constraintTop_toBottomOf="@+id/common_submit_btn" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:layout_marginTop="@dimen/marginTop_hdpi"
+        android:fontFamily="sans-serif"
         android:text="@string/lbl_agreement"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="@dimen/text_size_small_xxhdpi"
-        app:layout_constraintEnd_toEndOf="@+id/login_submit_btn"
-        app:layout_constraintStart_toStartOf="@+id/login_submit_btn"
-        app:layout_constraintTop_toBottomOf="@+id/login_sign_up_btn" />
+        app:layout_constraintEnd_toEndOf="@+id/common_submit_btn"
+        app:layout_constraintStart_toStartOf="@+id/common_submit_btn"
+        app:layout_constraintTop_toBottomOf="@+id/common_nav_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

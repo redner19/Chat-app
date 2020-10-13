@@ -3,13 +3,13 @@ package com.sololearner.chatapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sololearner.chatapp.R;
@@ -55,7 +55,7 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<MessageModel, Messa
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView sender, message;
+        MaterialTextView sender, message;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

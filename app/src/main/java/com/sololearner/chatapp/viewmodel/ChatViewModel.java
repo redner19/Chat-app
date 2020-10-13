@@ -54,9 +54,7 @@ public class ChatViewModel extends ViewModel {
     public FirestoreRecyclerOptions<MessageModel> options(){ return options; }
 
     //Return MessageModel
-    public MessageModel getMessageModel(Editable editable){
-        String message = Objects.requireNonNull(editable).toString();
-
+    public MessageModel getMessageModel(String message){
         String name = StringUtils.getName(mAuth.getCurrentUser().getEmail());
 
         String id = mAuth.getCurrentUser().getUid();

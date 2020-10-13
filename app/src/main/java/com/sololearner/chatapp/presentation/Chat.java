@@ -2,8 +2,6 @@ package com.sololearner.chatapp.presentation;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +16,8 @@ import com.sololearner.chatapp.presentation.base.BaseActivity;
 import com.sololearner.chatapp.utils.Constants;
 import com.sololearner.chatapp.viewmodel.ChatViewModel;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,16 +25,16 @@ import butterknife.OnClick;
 import static com.sololearner.chatapp.utils.NavigationUtils.goToSignUp;
 
 public class Chat extends BaseActivity {
-    private ChatViewModel chatViewModel;
+    private ChatViewModel mChatViewModel;
 
     private MessageAdapter adapter;
-
+    //MaterialButton
     @BindView(R.id.toolbar_sign_out)
-    Button mSignOutBTN;
-
+    MaterialButton mSignOutBTN;
+    //TextInputEditText
     @BindView(R.id.chat_TIET)
-    EditText mMessage;
-
+    TextInputEditText mMessage;
+    //RecyclerView
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
@@ -55,7 +55,7 @@ public class Chat extends BaseActivity {
 
     private void initViewModelProvider() {
         //init viewModel
-        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        mChatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
     }
 
     private void initRecyclerView() {
@@ -73,7 +73,7 @@ public class Chat extends BaseActivity {
 
     private void initAdapter() {
         // init adapter
-        adapter = new MessageAdapter(chatViewModel.options());
+        adapter = new MessageAdapter(mChatViewModel.options());
 
         //observe data adapter
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -92,7 +92,7 @@ public class Chat extends BaseActivity {
         switch (view.getId()) {
             case R.id.toolbar_sign_out:
                 //logout user
-                chatViewModel
+                mChatViewModel
                         .firebaseAuth()
                         .signOut();
 
@@ -100,13 +100,19 @@ public class Chat extends BaseActivity {
                 finish();
                 break;
             case R.id.chat_send_btn:
-                // send message to db / firestore
-                chatViewModel
-                        .collectionReference()
-                        .add(chatViewModel.getMessageModel(mMessage.getText()));
+                // get message in editText
+                String message = Objects.requireNonNull(mMessage.getText()).toString();
 
-                // remove text in mMessage
-                mMessage.setText(Constants.EMPTY);
+                // check if message is not empty
+                if (message.length() != 0) {
+                    // send message to db / fireStore
+                    mChatViewModel
+                            .collectionReference()
+                            .add(mChatViewModel.getMessageModel(message));
+
+                    // remove text in mMessage
+                    mMessage.setText(Constants.EMPTY);
+                }
                 break;
         }
     }

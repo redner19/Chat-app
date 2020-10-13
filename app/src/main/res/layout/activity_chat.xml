@@ -28,7 +28,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="6dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,21 +53,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/chat_TIET"
             android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="@dimen/margin_padding_xsmall"
-            android:layout_marginBottom="@dimen/margin_padding_xsmall"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_padding_xxnormal"
+            android:layout_marginTop="@dimen/margin_padding_xsmall"
             android:layout_marginEnd="@dimen/margin_padding_xsmall"
+            android:layout_marginBottom="@dimen/margin_padding_xsmall"
             android:background="@drawable/round_corner"
             android:hint="@string/lbl_start_new_message"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="8dp"
             android:imeOptions="normal"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
             android:textSize="@dimen/text_size_small_mdpi"
+            android:maxEms="10"
             app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:hintTextColor="@color/colorGray"
@@ -76,7 +77,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view7" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/chat_send_btn"
             android:layout_width="70dp"
             android:layout_height="40dp"
