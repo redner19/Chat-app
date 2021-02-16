@@ -1,75 +1,76 @@
 package com.sololearner.chatapp.presentation;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.sololearner.chatapp.R;
 import com.sololearner.chatapp.adapters.MessageAdapter;
-import com.sololearner.chatapp.presentation.base.BaseActivity;
+import com.sololearner.chatapp.databinding.ActivityChatBinding;
 import com.sololearner.chatapp.utils.Constants;
 import com.sololearner.chatapp.viewmodel.ChatViewModel;
 
-import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import static com.sololearner.chatapp.utils.NavigationUtils.goToSignUp;
-
-public class Chat extends BaseActivity {
+public class Chat extends Fragment {
     private ChatViewModel mChatViewModel;
 
+    private ActivityChatBinding mChatView;
+
     private MessageAdapter adapter;
-    //MaterialButton
-    @BindView(R.id.toolbar_sign_out)
-    MaterialButton mSignOutBTN;
-    //TextInputEditText
-    @BindView(R.id.chat_TIET)
-    TextInputEditText mMessage;
-    //RecyclerView
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mChatView = ActivityChatBinding.inflate(inflater, container, false);
+        return mChatView.getRoot();
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-
-        // Bind ButterKnife
-        ButterKnife.bind(this);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initViewModelProvider();
 
-        initRecyclerView();
+        initFragmentViews();
 
         initAdapter();
+    }
+
+    private void initFragmentViews() {
+        //Set Button Visibility and SetOnClickListener
+        mChatView.toolbarLayout.toolbarSignOut.setVisibility(View.VISIBLE);
+
+        mChatView
+                .toolbarLayout
+                .toolbarSignOut
+                .setOnClickListener(v -> {
+                    mChatViewModel
+                            .firebaseAuth()
+                            .signOut();
+
+                    Navigation.findNavController(v).popBackStack();
+                });
+
+        mChatView.chatSendBtn.setOnClickListener(v -> {
+            // get message in editText
+            String message = mChatView.chatTIET.getText().toString();
+
+            // Validate Message, if not empty call clear text after sending
+            mChatViewModel.validateMessage(message, () -> mChatView.chatTIET.setText(Constants.EMPTY));
+
+        });
     }
 
     private void initViewModelProvider() {
         //init viewModel
         mChatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
     }
-
-    private void initRecyclerView() {
-        // set logout button to visible
-        mSignOutBTN.setVisibility(View.VISIBLE);
-
-        // init linearLayoutManager
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
-
-        // setLayoutManager
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-    }
-
 
     private void initAdapter() {
         // init adapter
@@ -79,42 +80,12 @@ public class Chat extends BaseActivity {
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
-                mRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                mChatView.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
             }
         });
 
         // apply adapter to recyclerView
-        mRecyclerView.setAdapter(adapter);
-    }
-
-    @OnClick({R.id.toolbar_sign_out, R.id.chat_send_btn})
-    void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.toolbar_sign_out:
-                //logout user
-                mChatViewModel
-                        .firebaseAuth()
-                        .signOut();
-
-                goToSignUp(this);
-                finish();
-                break;
-            case R.id.chat_send_btn:
-                // get message in editText
-                String message = Objects.requireNonNull(mMessage.getText()).toString();
-
-                // check if message is not empty
-                if (message.length() != 0) {
-                    // send message to db / fireStore
-                    mChatViewModel
-                            .collectionReference()
-                            .add(mChatViewModel.getMessageModel(message));
-
-                    // remove text in mMessage
-                    mMessage.setText(Constants.EMPTY);
-                }
-                break;
-        }
+        mChatView.recyclerView.setAdapter(adapter);
     }
 
 

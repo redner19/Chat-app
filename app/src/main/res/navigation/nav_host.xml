@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_host"
+    app:startDestination="@id/index">
+
+    <fragment
+        android:id="@+id/index"
+        android:name="com.sololearner.chatapp.presentation.Index"
+        android:label="activity_index"
+        tools:layout="@layout/activity_index" >
+        <action
+            android:id="@+id/action_index_to_chat"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/index"
+            app:popUpToInclusive="true"
+            app:destination="@id/chat" />
+        <action
+            android:id="@+id/action_index_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_index_to_signUp"
+            app:destination="@id/signUp" />
+    </fragment>
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.sololearner.chatapp.presentation.Chat"
+        android:label="activity_chat"
+        tools:layout="@layout/activity_chat" />
+    <fragment
+        android:id="@+id/signUp"
+        android:name="com.sololearner.chatapp.presentation.SignUp"
+        android:label="SignUp"
+        tools:layout="@layout/common_layout">
+        <action
+            android:id="@+id/action_signUp_to_login"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/signUp"
+            app:popUpToInclusive="true"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_signUp_to_chat"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/index"
+            app:popUpToInclusive="true"
+            app:destination="@id/chat" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.sololearner.chatapp.presentation.Login"
+        android:label="common_layout"
+        tools:layout="@layout/common_layout" >
+        <action
+            android:id="@+id/action_login_to_signUp"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true"
+            app:destination="@id/signUp" />
+        <action
+            android:id="@+id/action_login_to_chat"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/index"
+            app:popUpToInclusive="true"
+            app:destination="@id/chat" />
+    </fragment>
+</navigation>

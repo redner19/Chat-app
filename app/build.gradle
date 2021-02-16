@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.sololearner.chatapp"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -26,14 +27,18 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
@@ -50,14 +55,18 @@ dependencies {
     //ButterKnife annotation compiler
     annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife"
 
-    implementation 'com.google.firebase:firebase-database:19.5.0'
+    implementation "com.google.firebase:firebase-database:$firebase_database"
 
-    implementation 'com.google.firebase:firebase-firestore:21.7.1'
+    implementation "com.google.firebase:firebase-firestore:$fire_store"
 
-    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation "com.google.firebase:firebase-auth:$firebase_auth"
 
-    implementation 'com.firebaseui:firebase-ui-firestore:6.1.0'
+    implementation "com.firebaseui:firebase-ui-firestore:$fire_store_ui"
 
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation "com.google.android.gms:play-services-auth:$play_service"
+
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
 }

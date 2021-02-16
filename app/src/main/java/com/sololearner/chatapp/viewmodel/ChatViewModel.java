@@ -1,7 +1,5 @@
 package com.sololearner.chatapp.viewmodel;
 
-import android.text.Editable;
-
 import androidx.lifecycle.ViewModel;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -13,7 +11,7 @@ import com.sololearner.chatapp.core.MessageModel;
 import com.sololearner.chatapp.utils.Constants;
 import com.sololearner.chatapp.utils.StringUtils;
 
-import java.util.Objects;
+import java.util.function.Function;
 
 import static com.sololearner.chatapp.utils.Constants.CHAT;
 import static com.sololearner.chatapp.utils.Constants.MESSAGE_TIME;
@@ -60,5 +58,17 @@ public class ChatViewModel extends ViewModel {
         String id = mAuth.getCurrentUser().getUid();
 
         return new MessageModel(message, name, id);
+    }
+
+    public void validateMessage(String message, Runnable runnable){
+        // check if message is not empty
+        if (message.length() != 0) {
+            // send message to db / fireStore
+            collectionReference()
+                    .add(getMessageModel(message));
+
+            // trigger callback to remove text in editText
+            runnable.run();
+        }
     }
 }

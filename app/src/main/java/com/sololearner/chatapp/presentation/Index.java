@@ -1,55 +1,74 @@
 package com.sololearner.chatapp.presentation;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
-import com.sololearner.chatapp.R;
-import com.sololearner.chatapp.presentation.base.BaseActivity;
+import com.sololearner.chatapp.databinding.ActivityIndexBinding;
 import com.sololearner.chatapp.viewmodel.FragmentsViewModel;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-import static com.sololearner.chatapp.utils.NavigationUtils.goToChat;
-import static com.sololearner.chatapp.utils.NavigationUtils.goToLogin;
-import static com.sololearner.chatapp.utils.NavigationUtils.goToSignUp;
+public class Index extends Fragment {
+    private FragmentsViewModel mViewModel;
 
+    private ActivityIndexBinding mIndexView;
 
-public class Index extends BaseActivity {
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mIndexView = ActivityIndexBinding.inflate(inflater,container,false);
+        return mIndexView.getRoot();
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(this);
+        mViewModel = new ViewModelProvider(this).get(FragmentsViewModel.class);
 
         initViewModelProvider();
+
+        initFragmentButtons();
+
+    }
+
+    private void initFragmentButtons() {
+        mIndexView.loginId.setOnClickListener(v -> {
+            //navigate to login fragment
+            NavDirections action = IndexDirections.actionIndexToLogin();
+            Navigation.findNavController(v).navigate(action);
+        });
+
+        mIndexView.signUpId.setOnClickListener(v -> {
+            //navigate to sign up fragment
+            NavDirections action = IndexDirections.actionIndexToSignUp();
+            Navigation.findNavController(v).navigate(action);
+        });
+
+
     }
 
     private void initViewModelProvider() {
-        FragmentsViewModel loginViewModel = new ViewModelProvider(this).get(FragmentsViewModel.class);
-        loginViewModel.isLogin.observe(this, isLogin -> {
-            if (isLogin)
-                goToChat(this);
+        mViewModel.isLogin.observe(getViewLifecycleOwner(), isLogin -> {
+            if (isLogin){
+                //navigate to chat fragment
+                NavDirections action = IndexDirections.actionIndexToChat();
+                Navigation.findNavController(mIndexView.textView).navigate(action);
+            }
         });
     }
 
-
-    @OnClick({R.id.sign_up_id, R.id.login_id})
-    void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.login_id:
-                //navigate to login fragment
-                goToLogin(this);
-                break;
-            case R.id.sign_up_id:
-                //navigate to sign up fragment
-                goToSignUp(this);
-                break;
-        }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mIndexView = null;
     }
 }

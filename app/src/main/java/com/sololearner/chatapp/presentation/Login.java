@@ -1,110 +1,84 @@
 package com.sololearner.chatapp.presentation;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.android.material.textview.MaterialTextView;
 import com.sololearner.chatapp.R;
 import com.sololearner.chatapp.core.User;
-import com.sololearner.chatapp.presentation.base.BaseActivity;
+import com.sololearner.chatapp.databinding.CommonLayoutBinding;
 import com.sololearner.chatapp.utils.StringUtils;
 import com.sololearner.chatapp.viewmodel.LoginViewModel;
 
-import java.util.Objects;
+public class Login extends Fragment {
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+    private LoginViewModel mLoginViewModel;
 
-import static com.sololearner.chatapp.utils.NavigationUtils.goToChat;
-import static com.sololearner.chatapp.utils.NavigationUtils.goToSignUp;
+    private CommonLayoutBinding mLoginView;
 
-public class Login extends BaseActivity {
+    //TODO transfer some logic in viewModel
 
-    LoginViewModel mLoginViewModel;
 
-    //TextInputEditText
-    @BindView(R.id.common_user_name_TIET)
-    TextInputEditText mUserNameTIET;
-
-    @BindView(R.id.common_password_TIET)
-    TextInputEditText mPasswordTIEL;
-
-    //TextInputLayout
-    @BindView(R.id.common_user_name_TIL)
-    TextInputLayout mUserNameTIL;
-
-    @BindView(R.id.common_password_TIL)
-    TextInputLayout mPasswordTIL;
-
-    //MaterialButton
-    @BindView(R.id.common_submit_btn)
-    MaterialButton mLoginBTN;
-
-    //MaterialTextView
-    @BindView(R.id.common_nav_btn)
-    MaterialTextView mSignUpBTN;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mLoginView = CommonLayoutBinding.inflate(inflater,container,false);
+        return mLoginView.getRoot();
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.common_layout);
-
-        // Bind ButterKnife
-        ButterKnife.bind(this);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         initViewModelProvider();
 
         initButton();
-
     }
 
     private void initViewModelProvider() {
         // init viewModel
         mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         // observe if login is success viewModel
-        mLoginViewModel.isSuccess.observe(this, isSuccess -> {
+        mLoginViewModel.isSuccess.observe(getViewLifecycleOwner(), isSuccess -> {
             if (isSuccess) {
-                //Goto Chat Page
-                goToChat(this);
+                //navigate to chat fragment
+                NavDirections action = LoginDirections.actionLoginToChat();
+                Navigation.findNavController(mLoginView.view7).navigate(action);
             } else {
-                mUserNameTIL.setError(getString(R.string.err_value_incorrect));
-                mPasswordTIL.setError(getString(R.string.err_value_incorrect));
+                mLoginView.commonUserNameTIL.setError(getString(R.string.err_value_incorrect));
+                mLoginView.commonPasswordTIL.setError(getString(R.string.err_value_incorrect));
             }
         });
     }
 
     private void initButton() {
         //Set text
-        mSignUpBTN
+        mLoginView.commonNavBtn
                 .setText(StringUtils
                         .underLine(getString(R.string.btn_index_sign_up)));
-        mLoginBTN
+        mLoginView.commonSubmitBtn
                 .setText(getString(R.string.btn_index_login));
-    }
 
-
-    @OnClick({R.id.common_submit_btn, R.id.common_nav_btn})
-    void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.common_submit_btn:
-                // check if input is valid
-                if (isValid())
-                    // login account if input is valid
-                    mLoginViewModel
-                            .loginAccount(getUser());
-                break;
-            case R.id.common_nav_btn:
+        mLoginView.commonSubmitBtn.setOnClickListener(v -> {
+            // check if input is valid
+            if (isValid())
+                // login account if input is valid
+                mLoginViewModel
+                        .loginAccount(getUser());
+        });
+        mLoginView.commonNavBtn.setOnClickListener(v -> {
                 //navigate to sign up fragment
-                goToSignUp(this);
-                break;
-        }
+            NavDirections action = LoginDirections.actionLoginToSignUp();
+            Navigation.findNavController(v).navigate(action);
+        });
     }
 
 
@@ -113,19 +87,19 @@ public class Login extends BaseActivity {
 
         //isValid if email length is greater than equal to and and less than equal to 16
         if (user.isUserNameValid()) {
-            mUserNameTIL.setError(null);
-            mUserNameTIL.setErrorEnabled(false);
+            mLoginView.commonUserNameTIL.setError(null);
+            mLoginView.commonUserNameTIL.setErrorEnabled(false);
         } else {
-            mUserNameTIL.setError(getString(R.string.err_value_incorrect));
+            mLoginView.commonUserNameTIL.setError(getString(R.string.err_value_incorrect));
             return false;
         }
 
         //isValid if password length is greater than equal to and and less than equal to 16
         if (user.isPasswordValid()) {
-            mPasswordTIL.setError(null);
-            mPasswordTIL.setErrorEnabled(false);
+            mLoginView.commonPasswordTIL.setError(null);
+            mLoginView.commonPasswordTIL.setErrorEnabled(false);
         } else {
-            mPasswordTIL.setError(getString(R.string.err_value_incorrect));
+            mLoginView.commonPasswordTIL.setError(getString(R.string.err_value_incorrect));
             return false;
         }
 
@@ -133,8 +107,14 @@ public class Login extends BaseActivity {
     }
 
     private User getUser() {
-        String email = Objects.requireNonNull(mUserNameTIET.getText()).toString();
-        String password = Objects.requireNonNull(mPasswordTIEL.getText()).toString();
+        String email = mLoginView.commonUserNameTIET.getText().toString();
+        String password = mLoginView.commonPasswordTIET.getText().toString();
         return new User(email, password);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mLoginView = null;
     }
 }
