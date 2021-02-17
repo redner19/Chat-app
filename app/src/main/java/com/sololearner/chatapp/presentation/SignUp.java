@@ -98,7 +98,7 @@ public class SignUp extends Fragment {
             // check if input is valid
             if (mSignUpViewModel.validateInputUser(getUser())){
                 // show loading screen
-                NavDirections action = LoginDirections.actionLoginToProgressDialog();
+                NavDirections action = SignUpDirections.actionSignUpToProgressDialog();
                 Navigation.findNavController(v).navigate(action);
 
                 // create account if input is valid
