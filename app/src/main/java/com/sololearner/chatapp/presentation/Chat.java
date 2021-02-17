@@ -2,6 +2,7 @@ package com.sololearner.chatapp.presentation;
 
 import android.os.Bundle;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.sololearner.chatapp.adapters.MessageAdapter;
 import com.sololearner.chatapp.databinding.ActivityChatBinding;
 import com.sololearner.chatapp.utils.AppUtils;
@@ -88,8 +92,22 @@ public class Chat extends Fragment {
             String message = mChatView.chatTIET.getText().toString();
 
             // Validate Message, if not empty call clear text after sending
-            mChatViewModel.validateMessage(message, () -> mChatView.chatTIET.setText(Constants.EMPTY));
 
+            // check if message is not empty
+            if (!message.isEmpty()) {
+                // send message to db / fireStore
+                mChatViewModel.collectionReference()
+                        .add(mChatViewModel.getMessageModel(message))
+                        .addOnSuccessListener(documentReference -> {
+                            Log.d("","");
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.d("","");
+                        });
+
+                // clear text input
+                mChatView.chatTIET.setText(Constants.EMPTY);
+            }
         });
     }
 

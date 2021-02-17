@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,8 +50,11 @@ public class Login extends Fragment {
     private void initViewModelObserver() {
         // observe if login is success viewModel
         mLoginViewModel.isSuccess.observe(getViewLifecycleOwner(), isSuccess -> {
+            // this will close the loading screen
+            Navigation.findNavController(mLoginView.view7).popBackStack();
+
             if (isSuccess) {
-                //navigate to chat fragment
+                // navigate to chat fragment
                 NavDirections action = LoginDirections.actionLoginToChat();
                 Navigation.findNavController(mLoginView.view7).navigate(action);
             } else {
@@ -93,14 +94,19 @@ public class Login extends Fragment {
 
         mLoginView.commonSubmitBtn.setOnClickListener(v -> {
             // check if input is valid
-            if (mLoginViewModel.validateInputUser(getUser()))
+            if (mLoginViewModel.validateInputUser(getUser())){
+                // show loading screen
+                NavDirections action = LoginDirections.actionLoginToProgressDialog();
+                Navigation.findNavController(v).navigate(action);
+
                 // login account if input is valid
                 mLoginViewModel
                         .loginAccount(getUser());
 
-            // close/hide keyboard
-            AppUtils
-                    .hideKeyboardFrom(requireContext(),mLoginView.commonSubmitBtn);
+                // close/hide keyboard
+                AppUtils
+                        .hideKeyboardFrom(requireContext(),mLoginView.commonSubmitBtn);
+            }
         });
         mLoginView.commonNavBtn.setOnClickListener(v -> {
             // navigate to sign up fragment

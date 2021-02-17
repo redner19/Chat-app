@@ -17,6 +17,10 @@
     <string name="btn_toolbar_logout">Log out</string>
     <string name="btn_chat_send">Send</string>
 
+    <!-- Loading -->
+    <string name="lbl_loading">Loading…</string>
+
+
     <!-- Errors -->
     <string name="err_value_incorrect">Value is incorrect</string>
 

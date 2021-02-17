@@ -1,9 +1,12 @@
 package com.sololearner.chatapp.core;
 
+import java.util.Date;
+
 public class MessageModel {
     private String message;
     private String sender;
     private String senderId;
+    private long messageTime;
 
     public MessageModel() {
     }
@@ -12,6 +15,8 @@ public class MessageModel {
         this.message = message;
         this.sender = sender;
         this.senderId = senderId;
+        messageTime = new Date().getTime();
+
     }
 
     public String getMessage() {
@@ -36,5 +41,13 @@ public class MessageModel {
 
     public void setSenderId(String senderId) {
         this.senderId = senderId;
+    }
+
+    public long getMessageTime() {
+        return messageTime;
+    }
+
+    public void setMessageTime(long messageTime) {
+        this.messageTime = messageTime;
     }
 }

@@ -50,6 +50,9 @@ public class SignUp extends Fragment {
         mSignUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         // observe if sign-up is success viewModel
         mSignUpViewModel.isSuccess.observe(getViewLifecycleOwner(), isSuccess -> {
+            // this will close the loading screen
+            Navigation.findNavController(mSignUpView.view7).popBackStack();
+
             if (isSuccess) {
                 // navigate to chat
                 NavDirections action = SignUpDirections.actionSignUpToChat();
@@ -94,6 +97,10 @@ public class SignUp extends Fragment {
         mSignUpView.commonSubmitBtn.setOnClickListener(v -> {
             // check if input is valid
             if (mSignUpViewModel.validateInputUser(getUser())){
+                // show loading screen
+                NavDirections action = LoginDirections.actionLoginToProgressDialog();
+                Navigation.findNavController(v).navigate(action);
+
                 // create account if input is valid
                 mSignUpViewModel.createAccount(getUser());
                 // close/hide keyboard

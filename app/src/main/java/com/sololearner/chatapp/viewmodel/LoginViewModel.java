@@ -18,7 +18,7 @@ public class LoginViewModel extends ViewModel {
         isSuccess = repository.isSuccess;
     }
 
-    public Boolean validateInputUser(User user){
+    public Boolean validateInputUser(User user) {
         isEmailValid.setValue(user.isUserNameValid());
         isPassValid.setValue(user.isPasswordValid());
         return user.isUserAndPasswordValid();

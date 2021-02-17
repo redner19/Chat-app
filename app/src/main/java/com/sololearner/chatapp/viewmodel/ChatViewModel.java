@@ -59,18 +59,6 @@ public class ChatViewModel extends ViewModel {
         return new MessageModel(message, name, id);
     }
 
-    public void validateMessage(String message, Runnable runnable){
-        // check if message is not empty
-        if (message.length() != 0) {
-            // send message to db / fireStore
-            collectionReference()
-                    .add(getMessageModel(message));
-
-            // trigger callback to remove text in editText
-            runnable.run();
-        }
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
