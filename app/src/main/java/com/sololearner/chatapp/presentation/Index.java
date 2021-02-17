@@ -17,6 +17,7 @@ import com.sololearner.chatapp.viewmodel.FragmentsViewModel;
 
 
 public class Index extends Fragment {
+
     private FragmentsViewModel mViewModel;
 
     private ActivityIndexBinding mIndexView;
@@ -24,12 +25,15 @@ public class Index extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mIndexView = ActivityIndexBinding.inflate(inflater,container,false);
+
+        mIndexView = ActivityIndexBinding.inflate(inflater, container, false);
+
         return mIndexView.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(FragmentsViewModel.class);
@@ -41,13 +45,13 @@ public class Index extends Fragment {
     }
 
     private void initFragmentButtons() {
-        mIndexView.loginId.setOnClickListener(v -> {
+        mIndexView.btnLogin.setOnClickListener(v -> {
             //navigate to login fragment
             NavDirections action = IndexDirections.actionIndexToLogin();
             Navigation.findNavController(v).navigate(action);
         });
 
-        mIndexView.signUpId.setOnClickListener(v -> {
+        mIndexView.btnSignUp.setOnClickListener(v -> {
             //navigate to sign up fragment
             NavDirections action = IndexDirections.actionIndexToSignUp();
             Navigation.findNavController(v).navigate(action);
@@ -58,10 +62,10 @@ public class Index extends Fragment {
 
     private void initViewModelProvider() {
         mViewModel.isLogin.observe(getViewLifecycleOwner(), isLogin -> {
-            if (isLogin){
+            if (isLogin) {
                 //navigate to chat fragment
                 NavDirections action = IndexDirections.actionIndexToChat();
-                Navigation.findNavController(mIndexView.textView).navigate(action);
+                Navigation.findNavController(mIndexView.tvTitle).navigate(action);
             }
         });
     }

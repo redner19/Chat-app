@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,9 +9,11 @@
     <include
         android:id="@+id/toolbar_layout"
         layout="@layout/custom_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <View
         android:id="@+id/top_line"
@@ -20,27 +22,32 @@
         android:layout_marginStart="@dimen/margin_padding_normal"
         android:layout_marginEnd="@dimen/margin_padding_normal"
         android:background="@color/colorLightGray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
+        android:layout_alignStart="@+id/toolbar_layout"
+        android:layout_alignEnd="@+id/toolbar_layout"
+        android:layout_below="@+id/toolbar_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:fitsSystemWindows="true"
+        android:layout_height="match_parent"
         android:layout_margin="6dp"
-        app:stackFromEnd="true"
-        tools:listitem="@layout/item_message_in"
+        android:overScrollMode="never"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/top_line"
+        android:layout_above="@+id/constraintLayout"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_line" />
+        app:stackFromEnd="true"
+        tools:listitem="@layout/item_message_in" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -56,42 +63,57 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/chat_TIET"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/chat_TIL"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="@dimen/margin_padding_xxnormal"
             android:layout_marginTop="@dimen/margin_padding_xsmall"
             android:layout_marginEnd="@dimen/margin_padding_xsmall"
-            android:layout_marginBottom="@dimen/margin_padding_xsmall"
-            android:background="@drawable/round_corner"
-            android:hint="@string/lbl_start_new_message"
-            android:imeOptions="normal"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:padding="8dp"
-            android:textSize="@dimen/text_size_small_mdpi"
-            android:maxEms="10"
-            app:hintAnimationEnabled="false"
+            app:boxBackgroundColor="#DAE2E8"
+            app:boxCornerRadiusBottomEnd="6dp"
+            app:boxCornerRadiusBottomStart="6dp"
+            app:boxCornerRadiusTopEnd="6dp"
+            app:boxCornerRadiusTopStart="6dp"
+            app:boxStrokeWidth="0dp"
+            app:errorEnabled="true"
             app:hintEnabled="false"
-            app:hintTextColor="@color/colorGray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/chat_send_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view7" />
+            app:layout_constraintTop_toBottomOf="@+id/view7">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/chat_TIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lbl_start_new_message"
+                android:imeOptions="normal"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxEms="10"
+                android:padding="8dp"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false"
+                app:hintTextColor="@color/colorGray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chat_send_btn"
             android:layout_width="70dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/margin_padding_xxnormal"
             android:text="@string/btn_chat_send"
             android:textAllCaps="false"
             app:backgroundTint="@color/colorGray"
-            app:layout_constraintBottom_toBottomOf="@+id/chat_TIET"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/chat_TIET"
-            app:layout_constraintTop_toTopOf="@+id/chat_TIET" />
+            app:layout_constraintStart_toEndOf="@+id/chat_TIL"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

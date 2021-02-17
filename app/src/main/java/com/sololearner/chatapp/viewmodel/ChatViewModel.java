@@ -8,17 +8,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.sololearner.chatapp.core.MessageModel;
-import com.sololearner.chatapp.utils.Constants;
 import com.sololearner.chatapp.utils.StringUtils;
-
-import java.util.function.Function;
 
 import static com.sololearner.chatapp.utils.Constants.CHAT;
 import static com.sololearner.chatapp.utils.Constants.MESSAGE_TIME;
 
 public class ChatViewModel extends ViewModel {
 
-    //Get FirebaseFirestore instance
+    //Get Firebase Firestore instance
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //Get FirebaseAuth instance
@@ -28,7 +25,8 @@ public class ChatViewModel extends ViewModel {
     private final CollectionReference collectionReference = db.collection(CHAT);
 
     //Get Query collection "chat" and orderBy messageTime and ascend result
-    private final Query query = FirebaseFirestore.getInstance()
+    private final Query query = FirebaseFirestore
+            .getInstance()
             .collection(CHAT)
             .orderBy(MESSAGE_TIME, Query.Direction.ASCENDING);
 
@@ -53,6 +51,7 @@ public class ChatViewModel extends ViewModel {
 
     //Return MessageModel
     public MessageModel getMessageModel(String message){
+
         String name = StringUtils.getName(mAuth.getCurrentUser().getEmail());
 
         String id = mAuth.getCurrentUser().getUid();
@@ -70,5 +69,10 @@ public class ChatViewModel extends ViewModel {
             // trigger callback to remove text in editText
             runnable.run();
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
     }
 }

@@ -16,7 +16,7 @@
         </shape>
     </item>
 
-    <item android:bottom="0dp"
+    <item android:bottom="4dp"
         android:top="0dp"
         android:gravity="right|center_horizontal|bottom">
         <rotate

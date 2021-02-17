@@ -13,4 +13,9 @@ public class FragmentsViewModel extends ViewModel {
         Repository repository = new Repository();
         isLogin = repository.isLogin;
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+    }
 }

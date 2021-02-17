@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.sololearner.chatapp.R;
 import com.sololearner.chatapp.core.User;
 import com.sololearner.chatapp.databinding.CommonLayoutBinding;
+import com.sololearner.chatapp.utils.AppUtils;
 import com.sololearner.chatapp.utils.StringUtils;
 import com.sololearner.chatapp.viewmodel.LoginViewModel;
 
@@ -24,28 +27,29 @@ public class Login extends Fragment {
 
     private CommonLayoutBinding mLoginView;
 
-    //TODO transfer some logic in viewModel
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mLoginView = CommonLayoutBinding.inflate(inflater,container,false);
+
+        mLoginView = CommonLayoutBinding.inflate(inflater, container, false);
+        // init viewModel
+        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
         return mLoginView.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
-        initViewModelProvider();
+        initViewModelObserver();
 
-        initButton();
+        initFragmentViews();
     }
 
-    private void initViewModelProvider() {
-        // init viewModel
-        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+    private void initViewModelObserver() {
         // observe if login is success viewModel
         mLoginViewModel.isSuccess.observe(getViewLifecycleOwner(), isSuccess -> {
             if (isSuccess) {
@@ -57,10 +61,30 @@ public class Login extends Fragment {
                 mLoginView.commonPasswordTIL.setError(getString(R.string.err_value_incorrect));
             }
         });
+
+        // isValid if email length is greater than equal to and and less than equal to 16
+        mLoginViewModel.isEmailValid().observe(getViewLifecycleOwner(), isValid -> {
+            if (isValid) {
+                mLoginView.commonUserNameTIL.setError(null);
+                mLoginView.commonUserNameTIL.setErrorEnabled(false);
+            } else {
+                mLoginView.commonUserNameTIL.setError(getString(R.string.err_value_incorrect));
+            }
+        });
+
+        // isValid if password length is greater than equal to and and less than equal to 16
+        mLoginViewModel.isPasswordValid().observe(getViewLifecycleOwner(), isValid -> {
+            if (isValid) {
+                mLoginView.commonPasswordTIL.setError(null);
+                mLoginView.commonPasswordTIL.setErrorEnabled(false);
+            } else {
+                mLoginView.commonPasswordTIL.setError(getString(R.string.err_value_incorrect));
+            }
+        });
     }
 
-    private void initButton() {
-        //Set text
+    private void initFragmentViews() {
+        // set text
         mLoginView.commonNavBtn
                 .setText(StringUtils
                         .underLine(getString(R.string.btn_index_sign_up)));
@@ -69,42 +93,22 @@ public class Login extends Fragment {
 
         mLoginView.commonSubmitBtn.setOnClickListener(v -> {
             // check if input is valid
-            if (isValid())
+            if (mLoginViewModel.validateInputUser(getUser()))
                 // login account if input is valid
                 mLoginViewModel
                         .loginAccount(getUser());
+
+            // close/hide keyboard
+            AppUtils
+                    .hideKeyboardFrom(requireContext(),mLoginView.commonSubmitBtn);
         });
         mLoginView.commonNavBtn.setOnClickListener(v -> {
-                //navigate to sign up fragment
+            // navigate to sign up fragment
             NavDirections action = LoginDirections.actionLoginToSignUp();
             Navigation.findNavController(v).navigate(action);
         });
     }
 
-
-    private Boolean isValid() {
-        User user = getUser();
-
-        //isValid if email length is greater than equal to and and less than equal to 16
-        if (user.isUserNameValid()) {
-            mLoginView.commonUserNameTIL.setError(null);
-            mLoginView.commonUserNameTIL.setErrorEnabled(false);
-        } else {
-            mLoginView.commonUserNameTIL.setError(getString(R.string.err_value_incorrect));
-            return false;
-        }
-
-        //isValid if password length is greater than equal to and and less than equal to 16
-        if (user.isPasswordValid()) {
-            mLoginView.commonPasswordTIL.setError(null);
-            mLoginView.commonPasswordTIL.setErrorEnabled(false);
-        } else {
-            mLoginView.commonPasswordTIL.setError(getString(R.string.err_value_incorrect));
-            return false;
-        }
-
-        return true;
-    }
 
     private User getUser() {
         String email = mLoginView.commonUserNameTIET.getText().toString();

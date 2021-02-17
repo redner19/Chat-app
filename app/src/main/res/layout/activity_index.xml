@@ -18,7 +18,7 @@
         android:src="@drawable/chat_app" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/sign_up_id"
+        android:id="@+id/btn_sign_up"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_size_height_xxxhdpi"
         android:layout_marginStart="@dimen/margin_padding_xxnormal"
@@ -42,6 +42,7 @@
         android:text="@string/btn_index_sign_up"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:transitionName="btn_submit"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/button_text_size_xxhdpi"
         android:textStyle="bold"
@@ -50,11 +51,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
         app:rippleColor="@color/colorAccent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_id"
+        android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_size_height_xxxhdpi"
         android:text="@string/btn_index_login"
@@ -63,11 +64,12 @@
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/button_text_size_xxhdpi"
         android:textStyle="bold"
+        android:transitionName="btn_submit"
         app:backgroundTint="@color/colorAccent"
         app:cornerRadius="6dp"
-        app:layout_constraintEnd_toEndOf="@+id/sign_up_id"
-        app:layout_constraintStart_toStartOf="@+id/sign_up_id"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_id"
+        app:layout_constraintEnd_toEndOf="@+id/btn_sign_up"
+        app:layout_constraintStart_toStartOf="@+id/btn_sign_up"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_up"
         app:rippleColor="@color/colorPrimaryDark" />
 
     <androidx.constraintlayout.widget.Guideline
