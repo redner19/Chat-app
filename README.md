@@ -8,16 +8,20 @@ A chat app with minimal design ❤️
 Use email to sign-up a user.
 
 ```html
-Email should contain 8 - 16 characters.
+Email should contain 8 - 16 characters including @gmail.com.
 *example redner@gmail.com
+Password should contain 8 - 16 characters
+*example 12345678
 ```
 
 ## Framework / Libraries
 
 ```html
-MaterialDesign
-RecyclerView
-Butterknife 
+MVVM
 FireBase
+LiveData
+Material Design
+View Binding
+Navigation Component
 ```
 
